@@ -51,6 +51,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\PickMeSequence.cs" />
+     <Compile Include="Assets\Scripts\Picks.cs" />
+     <Compile Include="Assets\Scripts\PicksSelection.cs" />
      <Compile Include="Assets\Scripts\RectUtility.cs" />
      <Compile Include="Assets\Scripts\Units.cs" />
      <Compile Include="Assets\Scripts\UnitSelection.cs" />

@@ -9,7 +9,7 @@ public class Units : MonoBehaviour
 
 	private Vector3? target = null;
 
-	public void InitializeUnit(Vector3 tar)
+	public void SetUnitTarget(Vector3 tar)
 	{
 		tar.y = transform.position.y;
 		target = tar;
