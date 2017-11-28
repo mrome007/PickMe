@@ -4,10 +4,23 @@ using UnityEngine;
 
 public class UnitSelection : MonoBehaviour 
 {
-	public List<Transform> Units;
+	public List<Units> Units;
 
 	private bool isSelecting = false;
+	private bool clearedSelected = false;
 	private Vector3 mousePosition1;
+
+	private int pickLayerMask;
+	private int unitLayerMask;
+	private List<Units> selectedUnits;
+
+	private void Start()
+	{
+		pickLayerMask = 1 << LayerMask.NameToLayer("Picks");
+		unitLayerMask = 1 << LayerMask.NameToLayer("Units");
+
+		selectedUnits = new List<Units>();
+	}
 
 	private void Update()
 	{
@@ -15,6 +28,8 @@ public class UnitSelection : MonoBehaviour
 		{
 			isSelecting = true;
 			mousePosition1 = Input.mousePosition;
+
+			SelectUnitsIndividually();
 		}
 
 		if(Input.GetMouseButtonUp(0))
@@ -23,14 +38,23 @@ public class UnitSelection : MonoBehaviour
 			{
 				for(int index = 0; index < Units.Count; index++)
 				{
-					if(IsWithinSelectionBounds(Units[index]))
+					if(IsWithinSelectionBounds(Units[index].transform))
 					{
-						Debug.Log(Units[index].name);
+						if(!clearedSelected)
+						{
+							selectedUnits.Clear();
+							clearedSelected = true;
+						}
+						Debug.Log(Units[index].gameObject.name);
+						selectedUnits.Add(Units[index]);
 					}
 				}
 			}
+			clearedSelected = false;
 			isSelecting = false;
 		}
+
+		CheckPicks();
 	}
 
 	private void OnGUI()
@@ -54,5 +78,39 @@ public class UnitSelection : MonoBehaviour
 		var viewportBounds = RectUtility.GetViewportBounds(camera, mousePosition1, Input.mousePosition);
 
 		return viewportBounds.Contains(camera.WorldToViewportPoint(unitTransform.position));
+	}
+
+	private void CheckPicks()
+	{
+		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if(Input.GetMouseButtonDown(0))
+		{
+			if(Physics.Raycast(ray, out hit, 100f, pickLayerMask))
+			{
+				Debug.Log(hit.collider.gameObject.name);
+				if(selectedUnits.Count > 0)
+				{
+					foreach(var unit in selectedUnits)
+					{
+						unit.InitializeUnit(hit.transform.position);
+					}
+					selectedUnits.Clear();
+				}
+			}
+		}
+	}
+
+	private void SelectUnitsIndividually()
+	{
+		var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if(Physics.Raycast(ray, out hit, 100f, unitLayerMask))
+		{
+			Debug.Log(hit.collider.name);
+			selectedUnits.Add(hit.collider.gameObject.GetComponent<Units>());
+		}
 	}
 }
