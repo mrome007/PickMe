@@ -149,5 +149,12 @@ public class UnitSelection : MonoBehaviour
 	{
 		Units = Units.Where(unit => unit != null).ToList();
 		NumberOfUnits = Units.Count;
+
+        for(int index = 0; index < NumberOfUnits; index++)
+        {
+            var newPos = new Vector3(Random.Range(-8f, 8), 1f, Random.Range(-1f, 10f));
+            Units[index].transform.localPosition = newPos;
+            Units[index].transform.localRotation = Quaternion.identity;
+        }
 	}
 }
