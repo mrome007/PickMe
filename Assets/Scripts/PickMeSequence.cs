@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,6 +9,8 @@ public class PickMeSequence : MonoBehaviour
 	public UnitSelection UnitSelection;
 	public PicksSelection PicksSelection;
     public Transform CameraTransform;
+	public RevealUnits RevealUnits;
+	public MoveCamera MoveCamera;
 
 	private int unitCount = 0;
 
@@ -41,22 +44,42 @@ public class PickMeSequence : MonoBehaviour
         yield return new WaitForSeconds(1f);
         PicksSelection.InitializePicks();
 
-        MoveForward();
-        UnitSelection.RearrangeUnits();
-        if(UnitSelection.NumberOfUnits <= 0)
-        {
-            Debug.Log("GAME OVER");
-            yield return new WaitForSeconds(3f);
-            SceneManager.LoadScene(0);
-        }
-        else
-        {
-            UnitSelection.SetSelectionMode(true);
-            PicksSelection.PickWinner();
-
-            unitCount = 0;
-        }
+		RevealUnits.StartReveal();
+		RevealUnits.RevealEnded += HandleRevealEnded;
     }
+
+	private void HandleRevealEnded(object sender, EventArgs e)
+	{
+		RevealUnits.RevealEnded -= HandleRevealEnded;
+		MoveForward();
+		UnitSelection.RearrangeUnits();
+		PicksSelection.PickWinner();
+
+		RevealUnits.StartConceal();
+		RevealUnits.ConcealEnded += HandleConcealEnded;
+	}
+
+	private void HandleConcealEnded(object sender, EventArgs e)
+	{
+		RevealUnits.ConcealEnded -= HandleConcealEnded;
+		if(UnitSelection.NumberOfUnits <= 0)
+		{
+			Debug.Log("GAME OVER");
+			StartCoroutine(DelayRestart());
+		}
+		else
+		{
+			UnitSelection.SetSelectionMode(true);
+
+			unitCount = 0;
+		}
+	}
+
+	private IEnumerator DelayRestart()
+	{
+		yield return new WaitForSeconds(3f);
+		SceneManager.LoadScene(0);
+	}
 
     private void MoveForward()
     {
@@ -64,16 +87,10 @@ public class PickMeSequence : MonoBehaviour
         newPicksPos.z += 45f;
         PicksSelection.transform.position = newPicksPos;
 
-        var newCamPos = CameraTransform.position;
-        newCamPos.z += 45f;
-        CameraTransform.position = newCamPos;
+		MoveCamera.MoveCameraForward(45f);
 
         var newPickMePos = transform.position;
         newPickMePos.z += 45f;
         transform.position = newPickMePos;
-
-        var newUnitsPos = UnitSelection.transform.position;
-        newUnitsPos.z += 45f;
-        UnitSelection.transform.position = newUnitsPos;
     }
 }

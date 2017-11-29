@@ -16,7 +16,7 @@ public class UnitSelection : MonoBehaviour
 	private List<Units> selectedUnits;
 
 	private bool selectionMode = false;
-
+	private int numTurns = 0;
 	public int NumberOfUnits { get; private set; }
 
 	public void SetSelectionMode(bool canSelect)
@@ -31,6 +31,7 @@ public class UnitSelection : MonoBehaviour
 
 		selectedUnits = new List<Units>();
 		NumberOfUnits = Units.Count;
+		numTurns = 1;
 	}
 
 	private void Update()
@@ -152,9 +153,9 @@ public class UnitSelection : MonoBehaviour
 
         for(int index = 0; index < NumberOfUnits; index++)
         {
-            var newPos = new Vector3(Random.Range(-8f, 8), 1f, Random.Range(-1f, 10f));
-            Units[index].transform.localPosition = newPos;
-            Units[index].transform.localRotation = Quaternion.identity;
+			var newPos = new Vector3(Random.Range(-8f, 8), 1f, Random.Range(-1f, 10f) + 45f * numTurns);
+			Units[index].SetUnitTarget(newPos);
         }
+		numTurns++;
 	}
 }
