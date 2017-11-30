@@ -24,7 +24,7 @@ public class RevealUnits : MonoBehaviour
 		var movementVector = transform.position;
 		while(transform.position.y > -30.5f)
 		{
-            movementVector.x = UnityEngine.Random.Range(-0.1f, 0.1f);
+            movementVector.x = UnityEngine.Random.Range(-0.25f, 0.25f);
 			movementVector.y -= Time.deltaTime * RevealSpeed;
 			transform.position = movementVector;
 			yield return null;
@@ -48,7 +48,7 @@ public class RevealUnits : MonoBehaviour
 		var movementVector = transform.position;
 		while(transform.position.y < -0.5)
 		{
-            movementVector.x = UnityEngine.Random.Range(-0.1f, 0.1f);
+            movementVector.x = UnityEngine.Random.Range(-0.25f, 0.25f);
 			movementVector.y += Time.deltaTime * RevealSpeed;
 			transform.position = movementVector;
 			yield return null;
