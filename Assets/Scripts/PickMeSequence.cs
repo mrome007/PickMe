@@ -16,10 +16,10 @@ public class PickMeSequence : MonoBehaviour
 
 	private void Start()
 	{
-		UnitSelection.SetSelectionMode(true);
-		PicksSelection.PickWinner();
+        PicksSelection.PickWinner();
 
-		unitCount = 0;
+        RevealUnits.StartConceal();
+        RevealUnits.ConcealEnded += HandleConcealEnded;
 	}
 
 	private bool CheckIfAllUnitsHavePicked()
