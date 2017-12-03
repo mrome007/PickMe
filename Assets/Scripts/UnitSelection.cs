@@ -76,7 +76,6 @@ public class UnitSelection : MonoBehaviour
 						ApplyUnitMaterial(Units[index].gameObject, true);
 					}
 				}
-				Debug.Log(selectedUnits.Count);
 			}
 			clearedSelected = false;
 			isSelecting = false;
@@ -149,13 +148,11 @@ public class UnitSelection : MonoBehaviour
 			{
 				selectedUnits.Add(hit.collider.gameObject.GetComponent<Units>());
 				ApplyUnitMaterial(hit.collider.gameObject, true);
-				Debug.Log(selectedUnits.Count);
 			}
 			else
 			{
 				ApplyUnitMaterial(hit.collider.gameObject, false);
 				selectedUnits.Remove(hit.collider.gameObject.GetComponent<Units>());
-				Debug.Log(selectedUnits.Count);
 			}
 		}
 	}

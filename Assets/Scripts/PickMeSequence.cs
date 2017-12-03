@@ -64,7 +64,6 @@ public class PickMeSequence : MonoBehaviour
 		RevealUnits.ConcealEnded -= HandleConcealEnded;
 		if(UnitSelection.NumberOfUnits <= 0)
 		{
-			Debug.Log("GAME OVER");
 			StartCoroutine(DelayRestart());
 		}
 		else
