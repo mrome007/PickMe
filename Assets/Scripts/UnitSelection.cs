@@ -6,6 +6,8 @@ using System.Linq;
 public class UnitSelection : MonoBehaviour 
 {
 	public List<Units> Units;
+	public Material UnitMaterial;
+	public Material SelectedMaterial;
 
 	private bool isSelecting = false;
 	private bool clearedSelected = false;
@@ -66,11 +68,12 @@ public class UnitSelection : MonoBehaviour
 					{
 						if(!clearedSelected)
 						{
+							ResetUnitMaterial();
 							selectedUnits.Clear();
 							clearedSelected = true;
 						}
-						Debug.Log(Units[index].gameObject.name);
 						selectedUnits.Add(Units[index]);
+						ApplyUnitMaterial(Units[index].gameObject, true);
 					}
 				}
 				Debug.Log(selectedUnits.Count);
@@ -128,6 +131,7 @@ public class UnitSelection : MonoBehaviour
 						var position = new Vector3(xPos, 1f, zPos);
 						unit.SetUnitTarget(position);
 					}
+					ResetUnitMaterial();
 					selectedUnits.Clear();
 				}
 			}
@@ -141,9 +145,24 @@ public class UnitSelection : MonoBehaviour
 
 		if(Physics.Raycast(ray, out hit, 100f, unitLayerMask))
 		{
-			selectedUnits.Add(hit.collider.gameObject.GetComponent<Units>());
-			Debug.Log(selectedUnits.Count);
+			if(!UnitIsSelected(hit.collider.gameObject))
+			{
+				selectedUnits.Add(hit.collider.gameObject.GetComponent<Units>());
+				ApplyUnitMaterial(hit.collider.gameObject, true);
+				Debug.Log(selectedUnits.Count);
+			}
+			else
+			{
+				ApplyUnitMaterial(hit.collider.gameObject, false);
+				selectedUnits.Remove(hit.collider.gameObject.GetComponent<Units>());
+				Debug.Log(selectedUnits.Count);
+			}
 		}
+	}
+
+	private bool UnitIsSelected(GameObject unt)
+	{
+		return selectedUnits.Find(unit => unit.gameObject.GetInstanceID() == unt.GetInstanceID());
 	}
 
 	public void RearrangeUnits()
@@ -157,5 +176,18 @@ public class UnitSelection : MonoBehaviour
 			Units[index].SetUnitTarget(newPos);
         }
 		numTurns++;
+	}
+
+	private void ApplyUnitMaterial(GameObject unt, bool selected)
+	{
+		unt.GetComponent<Renderer>().material = selected ? SelectedMaterial : UnitMaterial;
+	}
+
+	private void ResetUnitMaterial()
+	{
+		for(int index = 0; index < selectedUnits.Count; index++)
+		{
+			ApplyUnitMaterial(selectedUnits[index].gameObject, false);
+		}
 	}
 }

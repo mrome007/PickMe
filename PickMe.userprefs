@@ -2,14 +2,14 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RevealUnits.cs">
     <Files>
-      <File FileName="Assets/Scripts/UnitSelection.cs" Line="149" Column="26" />
+      <File FileName="Assets/Scripts/RevealUnits.cs" Line="27" Column="61" />
+      <File FileName="Assets/Scripts/UnitSelection.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/Picks.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/RectUtility.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Units.cs" Line="12" Column="2" />
-      <File FileName="Assets/Scripts/PicksSelection.cs" Line="17" Column="4" />
-      <File FileName="Assets/Scripts/PickMeSequence.cs" Line="55" Column="17" />
-      <File FileName="Assets/Scripts/RevealUnits.cs" Line="54" Column="3" />
-      <File FileName="Assets/Scripts/MoveCamera.cs" Line="25" Column="39" />
+      <File FileName="Assets/Scripts/Units.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PicksSelection.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/PickMeSequence.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MoveCamera.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

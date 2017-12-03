@@ -748,6 +748,8 @@ MonoBehaviour:
   - {fileID: 731346288}
   - {fileID: 1446037946}
   - {fileID: 285462877}
+  UnitMaterial: {fileID: 2100000, guid: 9b11d20dd0e77ae4aba39e5e86f27514, type: 2}
+  SelectedMaterial: {fileID: 2100000, guid: 2e3238632bb8446d288ed23aa2a65eac, type: 2}
 --- !u!1 &113463862
 GameObject:
   m_ObjectHideFlags: 0
